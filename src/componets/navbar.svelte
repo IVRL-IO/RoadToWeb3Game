@@ -4,28 +4,50 @@
     const serverUrl = "https://jqsksstyjvdt.usemoralis.com:2053/server";
     const appId = "IN1bckjO6Q9NjQLiqsigTCzbxaQlNj17xgs05vl5";
     Moralis.start({serverUrl, appId});
+    let openlogin = null;
+
+    const web3authSdk = window.Web3auth
+    let web3AuthInstance = null;
+
+        window.openlogin = new Openlogin.default({
+                                                     clientId: "BNp9wPRk6KyzQT-hn3vZv-Epw-UA7IA0G_ufVIzDOahRkKcZgoIxEaincfYNSWO2Fn9ueJnIj5xJBkoVj3Nj5sM",
+                                                     network: "testnet", // valid values 'testnet' or 'mainnet'
+                                                 });
+    window.openlogin.init();
 
     export let socket = {users: 1, usersTotal: 2, value: "1 ETH | $2,881.29"};
-    export let wallet = {connected: false, gasPrice: 0};
+    export let wallet = {connected: false, gasPrice: 0, balance: 0};
     let user = null;
+
+    async function connectEther(privKey) {
+        const wallet = new ethers.Wallet(
+            `0x${privKey}`,
+            ethers.getDefaultProvider()
+        );
+        user = await wallet.getAddress();
+        wallet.balance = await wallet.getBalance();
+    }
 
     /* Authentication code */
     async function login() {
-
-        user = Moralis.User.current();
-        if (!user) {
-            user = await Moralis.authenticate({signingMessage: "Log in using Moralis"})
-                .then(function (user) {
-                    console.log("logged in user:", user);
-                    console.log(user.get("ethAddress"));
-                    wallet.connected = true;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        } else {
-            wallet.connected = true;
+        const { privKey } = await window.openlogin.login();
+        if (privKey) {
+            await connectEther(privKey);
         }
+        /*        user = Moralis.User.current();
+                if (!user) {
+                    user = await Moralis.authenticate({signingMessage: "Log in using Moralis"})
+                        .then(function (user) {
+                            console.log("logged in user:", user);
+                            console.log(user.get("ethAddress"));
+                            wallet.connected = true;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    wallet.connected = true;
+                }*/
     }
 
     async function logOut() {
@@ -33,10 +55,16 @@
         console.log("logged out");
     }
 
-    user = Moralis.User.current();
+/*    user = Moralis.User.current();
     if (user) {
         wallet.connected = true;
+    }*/
+
+    if (window.openlogin.privKey) {
+            user =  window.openlogin.privKey + "."
+        connectEther(window.openlogin.privKey);
     }
+
 
     async function getAverageGasPrices() {
         const results = await Moralis.Cloud.run("getAvgGas");
@@ -91,7 +119,7 @@
     </div>
     <span class="navbar-text">
         {#if wallet.connected}
-            <a class="navbar-brand" href="#connect" on:click="{login}">{user ? user.get('ethAddress') : ""}</a>
+            <a class="navbar-brand" href="#connect" on:click="{login}">{user ? user : ""}</a>
 
         {:else }
             <a class="navbar-brand" href="#connect" on:click="{login}">Connect Wallet</a>
