@@ -1,81 +1,72 @@
+<style>
+
+</style>
 <script>
-    import Moralis from 'moralis/dist/moralis.min.js';
-    /* Moralis init code */
-    const serverUrl = "https://jqsksstyjvdt.usemoralis.com:2053/server";
-    const appId = "IN1bckjO6Q9NjQLiqsigTCzbxaQlNj17xgs05vl5";
-    Moralis.start({serverUrl, appId});
-    let openlogin = null;
+    export let socket = {users: 1, usersTotal: 2, value: "1 ETH | $2,881.29"};
+    export let wallet = {account: "", connected: false, gasPrice: 0, balance: 0};
 
     const web3authSdk = window.Web3auth
     let web3AuthInstance = null;
 
-        window.openlogin = new Openlogin.default({
-                                                     clientId: "BNp9wPRk6KyzQT-hn3vZv-Epw-UA7IA0G_ufVIzDOahRkKcZgoIxEaincfYNSWO2Fn9ueJnIj5xJBkoVj3Nj5sM",
-                                                     network: "testnet", // valid values 'testnet' or 'mainnet'
-                                                 });
-    window.openlogin.init();
 
-    export let socket = {users: 1, usersTotal: 2, value: "1 ETH | $2,881.29"};
-    export let wallet = {connected: false, gasPrice: 0, balance: 0};
-    let user = null;
+        web3AuthInstance = new web3authSdk.Web3Auth({
+            chainConfig: { chainNamespace: "eip155"},
+            clientId: "BNp9wPRk6KyzQT-hn3vZv-Epw-UA7IA0G_ufVIzDOahRkKcZgoIxEaincfYNSWO2Fn9ueJnIj5xJBkoVj3Nj5sM" // get your clientId from https://dashboard.web3auth.io
+        });
+
+
+        subscribeAuthEvents(web3AuthInstance)
+
+         web3AuthInstance.initModal();
+    async function initWeb3() {
+        // we can access this provider on `web3AuthInstance` only after user is logged in.
+        // This provider is also returned as a response of `connect` function in step 4. You can use either ways.
+        const web3 = new Web3(web3AuthInstance.provider);
+        wallet.account = (web3.eth.getAccounts())[0];
+        wallet.balance=  web3.eth.getBalance(wallet.account);
+    }
+        if (web3AuthInstance.provider) {
+            const user =  web3AuthInstance.getUserInfo();
+             initWeb3();
+        } else {
+
+        }
+
+    function subscribeAuthEvents(web3auth) {
+        web3auth.on("connected", (data) => {
+            console.log("Yeah!, you are successfully logged in", data);
+
+        });
+
+        web3auth.on("connecting", () => {
+            console.log("connecting");
+        });
+
+        web3auth.on("disconnected", () => {
+            console.log("disconnected");
+        });
+
+        web3auth.on("errored", (error) => {
+            console.log("some error or user have cancelled login request", error);
+        });
+
+        web3auth.on("MODAL_VISIBILITY", (isVisible) => {
+            console.log("modal visibility", isVisible)
+        });
+    }
 
     async function connectEther(privKey) {
-        const wallet = new ethers.Wallet(
-            `0x${privKey}`,
-            ethers.getDefaultProvider()
-        );
-        user = await wallet.getAddress();
-        wallet.balance = await wallet.getBalance();
+
     }
 
     /* Authentication code */
     async function login() {
-        const { privKey } = await window.openlogin.login();
-        if (privKey) {
-            await connectEther(privKey);
-        }
-        /*        user = Moralis.User.current();
-                if (!user) {
-                    user = await Moralis.authenticate({signingMessage: "Log in using Moralis"})
-                        .then(function (user) {
-                            console.log("logged in user:", user);
-                            console.log(user.get("ethAddress"));
-                            wallet.connected = true;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                } else {
-                    wallet.connected = true;
-                }*/
+        const provider = await web3AuthInstance.connect();
     }
 
     async function logOut() {
-        await Moralis.User.logOut();
+
         console.log("logged out");
-    }
-
-/*    user = Moralis.User.current();
-    if (user) {
-        wallet.connected = true;
-    }*/
-
-    if (window.openlogin.privKey) {
-            user =  window.openlogin.privKey + "."
-        connectEther(window.openlogin.privKey);
-    }
-
-
-    async function getAverageGasPrices() {
-        const results = await Moralis.Cloud.run("getAvgGas");
-        console.log("average user gas prices:", results);
-        wallet.gasPrice = results[0].avgGas;
-    }
-
-    function walletConnect() {
-        console.log("Wallet connected");
-        wallet = Moralis.authenticate({provider: "walletconnect"});
-        getAverageGasPrices();
     }
 
 </script>
@@ -119,7 +110,7 @@
     </div>
     <span class="navbar-text">
         {#if wallet.connected}
-            <a class="navbar-brand" href="#connect" on:click="{login}">{user ? user : ""}</a>
+            <a class="navbar-brand" href="#connect" on:click="{login}">{wallet.account ? wallet.account : ""}</a>
 
         {:else }
             <a class="navbar-brand" href="#connect" on:click="{login}">Connect Wallet</a>
