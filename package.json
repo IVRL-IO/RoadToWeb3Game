@@ -19,6 +19,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "moralis": "^1.2.5",
     "sirv-cli": "^2.0.0"
   },
   "repository": {
@@ -29,7 +30,7 @@
     "NFT",
     "Game"
   ],
-  "author": "Hackathon Team Robert Meffe, Priyank Gupta",
+  "author": "Hackathon Team Robert Meffe, Priyank Gupta, Jeanine Szeles Osborne",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/IVRL-IO/RoadToWeb3Game/issues"
