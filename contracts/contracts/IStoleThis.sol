@@ -52,15 +52,18 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     // @dev chainlink VRF result
     uint256 public randomResult;
 
-    // @dev cost to mint an NFT this is removed from the entrance fee
-    uint256 public nftMintAndGasCost;
+   // @dev gasCost 0.000000035 Gwei
+    unit256 gasCost = 0.000000035;
+
+    // @dev gasUsed per play
+    uint256 gasUsed = 30000;
 
     // Any underpay in theory should never happen...
     address underPaymentAddress = 0x3793D61a6db2Da1fCEe93616A558332A2fC05A4A;
 
     /// At the end of the round funds are transferred to allow address sell the NFT based
     /// on perceived value
-    mapping(address => uint256) private _nftSaleValue;
+    mapping(address => roundWinner) private _nftSaleValue;
 
     // List of creator addresses - Used to allow withdrawal or royalties / maintenance fees.
     IterableMapping.Map private _creators;
@@ -68,27 +71,33 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     event roundTimeChange(uint blocks, uint256 round);
     event joinRound(address indexed payee, uint256 weiAmount, uint256 rightClickTS);
     event roundEnd(round lastRound, address winner);
-    event roundStart();
+    event roundStart(uint winningSlot);
 
     mapping(address => round) private _rounds;
     mapping(address => unit256) private _deposits;
 
     /**
     * Players are not restricted from entering more than once per round
+    * TODO: address to roundEntrance will not work as it's distinct
     **/
     struct round {
-        mapping(address => roundEntrance) players;
         uint256 winningSlot;
         uint256 totalPlayers;
         uint256 roundValue;
         uint256 roundEndBlock;
         uint256 vrfSeed;
+        mapping(address => roundEntrance) players;
     }
 
     struct roundEntrance {
         uint256 blockNumber;
         uint256 blockTime;
         unint256 time;
+    }
+
+    struct roundWinner {
+        address winner;
+        uint256 roundBlock;
     }
 
     /**
@@ -213,14 +222,14 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     /**
     * @dev split the creator fees
     **/
-    function splitCreators(uint256 weiAmount) {
+    function splitCreators(uint256 weiAmount) internal {
         uint256 amountPaid = 0;
         for (uint i = 0; i < _creators.size(); i++) {
             address key = map.getKeyAtIndex(i);
 
             if(amountPaid <= weiAmount)
             {
-                address creatorAddress = _creators[key].creatorAddress;
+                address payable creatorAddress = _creators[key].creatorAddress;
                 uint percentage  = _creators[key].percentage;
                 _deposits[creatorAddress] += weiAmount * percentage;
                 // running total to make sure all wei is distributed
@@ -268,6 +277,8 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
      */
     function withdraw(address payable payee) public nonReentrant() {
         uint256 payment = _deposits[payee];
+        if(block.number >= nf)
+        _nftSaleValue[roundWinner];
 
         _deposits[payee] = 0;
 
@@ -306,6 +317,11 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
         // end the round before starting a new one
         emit roundEnd(_rounds[_round_index]);
         uint256 totalPlayers = _rounds[_round_index].totalPlayers;
+        //address winner = _rounds[_round_index].players _rounds[_round_index].winningSlot
+
+        uint256 nftMintAndGasCost = gasCost * gasUsed;
+
+        // TODO: fix this *sigh*
         _round_index += 1;
         // round start we set the VRF result
         _rounds[_round_index].vrfSeed = randomness;
