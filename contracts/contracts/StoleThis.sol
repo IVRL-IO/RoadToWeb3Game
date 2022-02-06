@@ -3,28 +3,32 @@ pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
-import { IterableMapping.Map, IterableMapping.creator } from "./libs/IterableMapping.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
+import {IterableMapping} from "./libs/IterableMapping.sol";
 
-contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradeable, UUPSUpgradeable  {
-    using Address for address payable;
+contract IStoleThis is ReentrancyGuard, VRFConsumerBase, Initializable, PausableUpgradeable, AccessControlUpgradeable, UUPSUpgradeable  {
+    // using Address for address payable;
     using IterableMapping for IterableMapping.Map;
+    using CountersUpgradeable for CountersUpgradeable.Counter;
 
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    CountersUpgradeable.Counter private _tokenIdCounter;
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
     // can start or end a round
     bytes32 public constant ROUND_ADMIN_ROLE = keccak256("ROUND_ADMIN_ROLE");
+    // can start or end a round
+    bytes32 public constant NFT_MINT = keccak256("NFT_MINT");
     // Can withdraw link from contract
     bytes32 public constant LINK_ADMIN_ROLE = keccak256("LINK_ADMIN_ROLE");
     // @dev Chainlink keyhash
     bytes32 internal keyHash;
 
     /**
-    * Based off block time of 1 block ever 2.25 seconds
+    * @dev Based off block time of 1 block ever 2.25 seconds
     * 24 blocks a min
     * 1440 blocks an hour
     * This time is updated every round based on last player count.
@@ -41,7 +45,7 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     // Creator fee is capped at 10% max. Fee can be adjusted lower or back to
     // max. Fee covers maintenance and AWS costs. AWS is not needed but used
     // to share stats to all users for the round.
-    uint private _creatorFee = .1;
+    uint private _creatorFee = 10;
 
     // current round id
     uint256 private _round_index = 0;
@@ -52,29 +56,33 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     // @dev chainlink VRF result
     uint256 public randomResult;
 
-   // @dev gasCost 0.000000035 Gwei
-    unit256 gasCost = 0.000000035;
+    // @dev gasCost 0.000000035 Gwei
+    uint256 gasCost = 0.000000035  * 10 ** 18;
 
     // @dev gasUsed per play
     uint256 gasUsed = 30000;
 
     // Any underpay in theory should never happen...
-    address underPaymentAddress = 0x3793D61a6db2Da1fCEe93616A558332A2fC05A4A;
+    address payable underPaymentAddress = payable(0x3793D61a6db2Da1fCEe93616A558332A2fC05A4A);
 
-    /// At the end of the round funds are transferred to allow address sell the NFT based
-    /// on perceived value
-    mapping(address => roundWinner) private _nftSaleValue;
+    /// @dev At the end of the round funds are transferred to allow address sell the NFT based on perceived value
+    mapping(uint256 => roundWinner) private _nftSaleValue;
+    uint256 _nftSaleIndex;
 
     // List of creator addresses - Used to allow withdrawal or royalties / maintenance fees.
     IterableMapping.Map private _creators;
 
-    event roundTimeChange(uint blocks, uint256 round);
-    event joinRound(address indexed payee, uint256 weiAmount, uint256 rightClickTS);
-    event roundEnd(round lastRound, address winner);
-    event roundStart(uint winningSlot);
+    CountersUpgradeable.Counter private _tokenIdCounter;
 
-    mapping(address => round) private _rounds;
-    mapping(address => unit256) private _deposits;
+    event roundTimeChange(uint blocks, uint256 round);
+    event joinRound(address player, uint256 weiAmount);
+    event roundEnd(uint256 lastRoundIndex, address winner);
+    event roundStart(uint winningSlot);
+    event nftSaleExpired(uint256 roundIndex, uint256 nftValueIndex);
+    event saleNFT(address player, uint256 payment);
+
+    mapping(uint256 => round) private _rounds;
+    mapping(address => uint256) private _deposits;
 
     /**
     * Players are not restricted from entering more than once per round
@@ -84,20 +92,24 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
         uint256 winningSlot;
         uint256 totalPlayers;
         uint256 roundValue;
+        uint256 gasTotal;
         uint256 roundEndBlock;
         uint256 vrfSeed;
-        mapping(address => roundEntrance) players;
+
+        mapping(uint256 => roundEntrance) players;
     }
 
     struct roundEntrance {
+        address payable player;
         uint256 blockNumber;
         uint256 blockTime;
-        unint256 time;
     }
 
     struct roundWinner {
-        address winner;
+        address payable winner;
+        uint256 roundIndex;
         uint256 roundBlock;
+        bool claimed;
     }
 
     /**
@@ -124,7 +136,7 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
      * Requires deployment to pass in correct address for chainlink
      */
     /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor(address vrfCoordinator, address linkToken, address keyHash, unit fee)
+    constructor(address vrfCoordinator, address linkToken, address keyHash, uint fee)
     VRFConsumerBase(
         vrfCoordinator, // VRF Coordinator
         linkToken  // LINK Token
@@ -147,6 +159,12 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
         initCreators();
     }
 
+    function _authorizeUpgrade(address newImplementation)
+    internal
+    onlyRole(UPGRADER_ROLE)
+    override
+    {}
+
     function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
@@ -160,33 +178,33 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
         // Team creator / Idea person / Lead Developer Robert M. Meffe - IVRL Inc Wallet
         // Gets to pay AWS cost
         _creators.set(address(0), IterableMapping.creator({
-            creatorAddress: 0x3793D61a6db2Da1fCEe93616A558332A2fC05A4A,
-            percentage: 4
+        creatorAddress : payable(0x3793D61a6db2Da1fCEe93616A558332A2fC05A4A),
+        percentage : 4
         }));
 
         // Social Media Expert / Project Manager | Jeanine (Szeles) Osborne
         _creators.set(address(1), IterableMapping.creator({
-            creatorAddress: 0x0d87cEe4EBd0b92f4ecc0A9b1F13940453FFB0aa,
-            percentage: 2
+        creatorAddress : payable(0x0d87cEe4EBd0b92f4ecc0A9b1F13940453FFB0aa),
+        percentage : 2
         }));
 
         // Developer | Priyank Gupta
         _creators.set(address(2), IterableMapping.creator({
-            creatorAddress: 0x0d87cEe4EBd0b92f4ecc0A9b1F13940453FFB0aa,
-            percentage: 2
+        creatorAddress : payable(0x0d87cEe4EBd0b92f4ecc0A9b1F13940453FFB0aa),
+        percentage : 2
         }));
 
         // Artist |
         _creators.set(address(3), IterableMapping.creator({
-            creatorAddress: 0x0d87cEe4EBd0b92f4ecc0A9b1F13940453FFB0aa,
-            percentage: 2
+        creatorAddress : payable(0x0d87cEe4EBd0b92f4ecc0A9b1F13940453FFB0aa),
+        percentage : 2
         }));
     }
 
     /**
     * updates round time based
     **/
-    function _update_round_time(uint blocks ) internal
+    function _update_round_time(uint blocks) internal
     whenNotPaused
     {
         // use memory to save fees
@@ -204,17 +222,17 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     /**
     * @dev Returns total able sale-able amount
     **/
-    function roundInformation(address round) public view returns (round) {
-        return _rounds[round];
-    }
+/*    function roundInformation(address roundIndex) public view returns (round) {
+        round memory tmp = _rounds[roundIndex];
+        return tmp;
+    }*/
 
     /**
     * @dev Starts a new round
     **/
-    function startRound() public
-    OnlyRole(ROUND_ADMIN_ROLE)  {
+    function startRound() public onlyRole(ROUND_ADMIN_ROLE) {
         // can only start a new round once the block is past the endBlock of the current round
-        if(_rounds[_round_index].roundEndBlock >= block.number){
+        if (_rounds[_round_index].roundEndBlock >= block.number) {
             getRandomNumber();
         }
     }
@@ -224,19 +242,20 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
     **/
     function splitCreators(uint256 weiAmount) internal {
         uint256 amountPaid = 0;
-        for (uint i = 0; i < _creators.size(); i++) {
-            address key = map.getKeyAtIndex(i);
 
-            if(amountPaid <= weiAmount)
+        for (uint i = 0; i < _creators.size(); i++) {
+            address key = _creators.getKeyAtIndex(i);
+            IterableMapping.creator memory creator = _creators.get(key);
+            if (amountPaid <= weiAmount)
             {
-                address payable creatorAddress = _creators[key].creatorAddress;
-                uint percentage  = _creators[key].percentage;
+                address payable creatorAddress = payable(creator.creatorAddress);
+                uint percentage = creator.percentage;
                 _deposits[creatorAddress] += weiAmount * percentage;
                 // running total to make sure all wei is distributed
                 amountPaid += weiAmount * percentage;
             }
         }
-        if( amountPaid != weiAmount)
+        if (amountPaid != weiAmount)
         {
             // sends to the team creator
             _deposits[underPaymentAddress] += weiAmount - amountPaid;
@@ -245,26 +264,26 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
 
     /**
      * @dev Stores the sent amount as credit to be withdrawn.
-     * @param payee The destination address of the funds.
+     * @param player The destination address of the funds.
      */
-    function joinRound(address player) public payable
-    whenNotPaused
-    nonReentrant()
+    function playerJoinRound(address player) external payable nonReentrant
+
     {
         uint256 amount = msg.value;
-
-        _rounds[_round_index].players[player] = roundEntrance({
-            blockNumber: block.number,
-            blockTime: block.timestamp,
-            time: now()
-        });
-        // solidity .8+ compiler has overflow checking SafeMath omitted
-        _rounds[_round_index].roundValue = amount - (amount * _creatorFee);
+        uint256 nftMintAndGasCost = gasCost * gasUsed;
 
         _rounds[_round_index].totalPlayers += 1;
+
+        _rounds[_round_index].players[_rounds[_round_index].totalPlayers] = roundEntrance({
+        player: payable(player), blockNumber : block.number, blockTime: block.timestamp
+        });
+        // solidity .8+ compiler has overflow checking SafeMath omitted
+        _rounds[_round_index].roundValue = amount - (amount * (_creatorFee / 100)) - nftMintAndGasCost;
+        _rounds[_round_index].gasTotal += nftMintAndGasCost;
+
         // send the creatorFee to the creators
-        _splitCreators(amount * _creatorFee);
-        emit joinRound(payee, amount, now);
+        splitCreators(amount * (_creatorFee / 100));
+        emit joinRound(player, amount);
     }
 
     /**
@@ -275,16 +294,31 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
      *
      * @param payee The address whose funds will be withdrawn and transferred to.
      */
-    function withdraw(address payable payee) public nonReentrant() {
+    function withdraw(address payable payee) public payable nonReentrant() {
+
+
+        for (uint256 i = 0; i < _nftSaleIndex; i++) {
+            //time to claim expired
+            if(_nftSaleValue[i].claimed == false)
+            {
+                if (block.number >= _nftSaleValue[i].roundBlock)
+                {
+                    _nftSaleValue[i].claimed = true;
+                    splitCreators(_rounds[_nftSaleValue[i].roundIndex].roundValue);
+                    emit nftSaleExpired(_nftSaleValue[i].roundIndex, i);
+                } else {
+                    _nftSaleValue[i].claimed = true;
+                    _deposits[payee] += _rounds[_nftSaleValue[i].roundIndex].roundValue;
+                }
+            }
+        }
         uint256 payment = _deposits[payee];
-        if(block.number >= nf)
-        _nftSaleValue[roundWinner];
 
         _deposits[payee] = 0;
 
-        payee.sendValue(payment);
+        payee.transfer(payment);
 
-        emit Withdrawn(payee, payment);
+        emit saleNFT(payee, payment);
     }
 
 
@@ -304,7 +338,7 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
 
-        if(_rounds[_round_index].totalPlayers >= 1440 || ((1440 -_rounds[_round_index].totalPlayers) < 240)) {
+        if (_rounds[_round_index].totalPlayers >= 1440 || ((1440 - _rounds[_round_index].totalPlayers) < 240)) {
             // fastest round time is 10 mins
             _update_round_time(240);
         } else if (_rounds[_round_index].totalPlayers >= 10) {
@@ -312,16 +346,25 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
             _update_round_time(1440);
         } else if (_rounds[_round_index].totalPlayers >= 10) {
             // select round time
-            _update_round_time(1440 -_rounds[_round_index].totalPlayers);
+            _update_round_time(1440 - _rounds[_round_index].totalPlayers);
         }
-        // end the round before starting a new one
-        emit roundEnd(_rounds[_round_index]);
+
         uint256 totalPlayers = _rounds[_round_index].totalPlayers;
-        //address winner = _rounds[_round_index].players _rounds[_round_index].winningSlot
 
-        uint256 nftMintAndGasCost = gasCost * gasUsed;
+        address payable winningPlayer = _rounds[_round_index].players[totalPlayers - _rounds[_round_index].winningSlot].player;
+        // end the round before starting a new one
+        emit roundEnd(_round_index, winningPlayer);
 
-        // TODO: fix this *sigh*
+        // uint256 nftMintAndGasCost = gasCost * gasUsed;
+
+
+        _nftSaleValue[_nftSaleIndex] = roundWinner({
+            winner : payable(winningPlayer),
+            roundIndex: _round_index ,
+            roundBlock : block.number,
+            claimed: false
+        });
+        _nftSaleIndex += 1;
         _round_index += 1;
         // round start we set the VRF result
         _rounds[_round_index].vrfSeed = randomness;
@@ -329,7 +372,7 @@ contract IStoleThis is Initializable, PausableUpgradeable, AccessControlUpgradea
         // transform the result to winningSlot
         // select 10% of the last round player size
         // add two to make sure it's not the last slot ever
-        uint256 winningSlot = (randomness % (totalPlayers * .1)) + 2;
+        uint256 winningSlot = (randomness % (totalPlayers * 10 / 100)) + 2;
 
         // winning slot is based on the totalPlayers - winningSlot
         // if winningSlot is larger than the total players in the round the slot will always be 2
