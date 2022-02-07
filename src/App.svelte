@@ -10,8 +10,16 @@
     let active = false;
     wallet.connected = typeof window.ethereum !== 'undefined';
 
-    function buttonPress() {
+    function buttonPress(event) {
         active = !active;
+        event.target.src = 'buttonPushed.png';
+        if (wallet.connected && wallet.showErrorMsg === false) {
+            wallet.showErrorMsg = true;
+        }
+    }
+    function buttonRelease(event) {
+        active = !active;
+        event.target.src = 'button.png';
         if (wallet.connected && wallet.showErrorMsg === false) {
             wallet.showErrorMsg = true;
         }
@@ -19,7 +27,7 @@
 </script>
 <style>
     .active {
-        color: red;
+        background-image: url('/buttonPressed.png') !important;;
     }
 </style>
 
@@ -28,14 +36,12 @@
 
     <div class="container-fluid">
 
-        <div class="row justify-content-center  align-self-center" style="min-height: 148px">
-            <div class="col col-md-2 offset-md-1" class:active="{active}"
-                 on:mousedown="{buttonPress}" on:mouseup="{buttonPress}"
-                 on:touchstart="{buttonPress}" on:touchend="{buttonPress}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                </svg>
+        <div class="row align-self-center" style="min-height: 148px; text-align: center">
+            <div class="col col-md-2 offset-md-4" class:active="{active}"
+                 on:mousedown="{buttonPress}"   on:touchstart="{buttonPress}">
+
+                <img src="button.png" style=" background-repeat: no-repeat;min-height: 200px; max-height: 800px;"   on:mouseup="{buttonRelease}"
+                     on:touchend="{buttonRelease}"/>
             </div>
         </div>
         {#if wallet.showErrorMsg}
