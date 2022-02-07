@@ -404,485 +404,485 @@ var app = (function () {
 
     // (141:8) {:else }
     function create_else_block(ctx) {
-    	let a;
-    	let mounted;
-    	let dispose;
+        let a;
+        let mounted;
+        let dispose;
 
-    	const block = {
-    		c: function create() {
-    			a = element("a");
-    			a.textContent = "Connect Wallet";
-    			attr_dev(a, "class", "navbar-brand");
-    			attr_dev(a, "href", "#connect");
-    			add_location(a, file$1, 141, 12, 4564);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, a, anchor);
+        const block = {
+            c: function create() {
+                a = element("a");
+                a.textContent = "Connect Wallet";
+                attr_dev(a, "class", "navbar-brand");
+                attr_dev(a, "href", "#connect");
+                add_location(a, file$1, 141, 12, 4564);
+            },
+            m: function mount(target, anchor) {
+                insert_dev(target, a, anchor);
 
-    			if (!mounted) {
-    				dispose = listen_dev(a, "click", /*login*/ ctx[2], false, false, false);
-    				mounted = true;
-    			}
-    		},
-    		p: noop,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(a);
-    			mounted = false;
-    			dispose();
-    		}
-    	};
+                if (!mounted) {
+                    dispose = listen_dev(a, "click", /*login*/ ctx[2], false, false, false);
+                    mounted = true;
+                }
+            },
+            p: noop,
+            d: function destroy(detaching) {
+                if (detaching) detach_dev(a);
+                mounted = false;
+                dispose();
+            }
+        };
 
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_else_block.name,
-    		type: "else",
-    		source: "(141:8) {:else }",
-    		ctx
-    	});
+        dispatch_dev("SvelteRegisterBlock", {
+            block,
+            id: create_else_block.name,
+            type: "else",
+            source: "(141:8) {:else }",
+            ctx
+        });
 
-    	return block;
+        return block;
     }
 
     // (138:8) {#if wallet.connected}
     function create_if_block$1(ctx) {
-    	let a;
+        let a;
 
-    	let t_value = (/*wallet*/ ctx[0].account
-    	? /*wallet*/ ctx[0].account
-    	: "") + "";
+        let t_value = (/*wallet*/ ctx[0].account
+            ? /*wallet*/ ctx[0].account
+            : "") + "";
 
-    	let t;
-    	let mounted;
-    	let dispose;
+        let t;
+        let mounted;
+        let dispose;
 
-    	const block = {
-    		c: function create() {
-    			a = element("a");
-    			t = text(t_value);
-    			attr_dev(a, "class", "navbar-brand");
-    			attr_dev(a, "href", "#connect");
-    			add_location(a, file$1, 138, 12, 4432);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, a, anchor);
-    			append_dev(a, t);
+        const block = {
+            c: function create() {
+                a = element("a");
+                t = text(t_value);
+                attr_dev(a, "class", "navbar-brand");
+                attr_dev(a, "href", "#connect");
+                add_location(a, file$1, 138, 12, 4432);
+            },
+            m: function mount(target, anchor) {
+                insert_dev(target, a, anchor);
+                append_dev(a, t);
 
-    			if (!mounted) {
-    				dispose = listen_dev(a, "click", /*login*/ ctx[2], false, false, false);
-    				mounted = true;
-    			}
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*wallet*/ 1 && t_value !== (t_value = (/*wallet*/ ctx[0].account
-    			? /*wallet*/ ctx[0].account
-    			: "") + "")) set_data_dev(t, t_value);
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(a);
-    			mounted = false;
-    			dispose();
-    		}
-    	};
+                if (!mounted) {
+                    dispose = listen_dev(a, "click", /*login*/ ctx[2], false, false, false);
+                    mounted = true;
+                }
+            },
+            p: function update(ctx, dirty) {
+                if (dirty & /*wallet*/ 1 && t_value !== (t_value = (/*wallet*/ ctx[0].account
+                    ? /*wallet*/ ctx[0].account
+                    : "") + "")) set_data_dev(t, t_value);
+            },
+            d: function destroy(detaching) {
+                if (detaching) detach_dev(a);
+                mounted = false;
+                dispose();
+            }
+        };
 
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block$1.name,
-    		type: "if",
-    		source: "(138:8) {#if wallet.connected}",
-    		ctx
-    	});
+        dispatch_dev("SvelteRegisterBlock", {
+            block,
+            id: create_if_block$1.name,
+            type: "if",
+            source: "(138:8) {#if wallet.connected}",
+            ctx
+        });
 
-    	return block;
+        return block;
     }
 
     function create_fragment$1(ctx) {
-    	let nav1;
-    	let nav0;
-    	let a0;
-    	let img;
-    	let img_src_value;
-    	let t0;
-    	let t1;
-    	let button;
-    	let span0;
-    	let t2;
-    	let div;
-    	let ul;
-    	let li0;
-    	let a1;
-    	let t4;
-    	let li1;
-    	let span1;
-    	let t5;
-    	let t6_value = /*socket*/ ctx[1].usersTotal + "";
-    	let t6;
-    	let t7;
-    	let li2;
-    	let span2;
-    	let t8;
-    	let t9_value = /*socket*/ ctx[1].users + "";
-    	let t9;
-    	let t10;
-    	let li3;
-    	let span3;
-    	let t11;
-    	let t12_value = /*socket*/ ctx[1].value + "";
-    	let t12;
-    	let t13;
-    	let li4;
-    	let span4;
-    	let t14;
-    	let t15_value = /*wallet*/ ctx[0].gasPrice + "";
-    	let t15;
-    	let t16;
-    	let span5;
+        let nav1;
+        let nav0;
+        let a0;
+        let img;
+        let img_src_value;
+        let t0;
+        let t1;
+        let button;
+        let span0;
+        let t2;
+        let div;
+        let ul;
+        let li0;
+        let a1;
+        let t4;
+        let li1;
+        let span1;
+        let t5;
+        let t6_value = /*socket*/ ctx[1].usersTotal + "";
+        let t6;
+        let t7;
+        let li2;
+        let span2;
+        let t8;
+        let t9_value = /*socket*/ ctx[1].users + "";
+        let t9;
+        let t10;
+        let li3;
+        let span3;
+        let t11;
+        let t12_value = /*socket*/ ctx[1].value + "";
+        let t12;
+        let t13;
+        let li4;
+        let span4;
+        let t14;
+        let t15_value = /*wallet*/ ctx[0].gasPrice + "";
+        let t15;
+        let t16;
+        let span5;
 
-    	function select_block_type(ctx, dirty) {
-    		if (/*wallet*/ ctx[0].connected) return create_if_block$1;
-    		return create_else_block;
-    	}
+        function select_block_type(ctx, dirty) {
+            if (/*wallet*/ ctx[0].connected) return create_if_block$1;
+            return create_else_block;
+        }
 
-    	let current_block_type = select_block_type(ctx);
-    	let if_block = current_block_type(ctx);
+        let current_block_type = select_block_type(ctx);
+        let if_block = current_block_type(ctx);
 
-    	const block = {
-    		c: function create() {
-    			nav1 = element("nav");
-    			nav0 = element("nav");
-    			a0 = element("a");
-    			img = element("img");
-    			t0 = text("\n            IStoleThis");
-    			t1 = space();
-    			button = element("button");
-    			span0 = element("span");
-    			t2 = space();
-    			div = element("div");
-    			ul = element("ul");
-    			li0 = element("li");
-    			a1 = element("a");
-    			a1.textContent = "Documentation";
-    			t4 = space();
-    			li1 = element("li");
-    			span1 = element("span");
-    			t5 = text("Connected Users: ");
-    			t6 = text(t6_value);
-    			t7 = space();
-    			li2 = element("li");
-    			span2 = element("span");
-    			t8 = text("User in round: ");
-    			t9 = text(t9_value);
-    			t10 = space();
-    			li3 = element("li");
-    			span3 = element("span");
-    			t11 = text("Estimated NFT Value: ");
-    			t12 = text(t12_value);
-    			t13 = space();
-    			li4 = element("li");
-    			span4 = element("span");
-    			t14 = text("Gas Price: ");
-    			t15 = text(t15_value);
-    			t16 = space();
-    			span5 = element("span");
-    			if_block.c();
-    			if (!src_url_equal(img.src, img_src_value = "GoldPoo.png")) attr_dev(img, "src", img_src_value);
-    			set_style(img, "max-height", "32px");
-    			add_location(img, file$1, 105, 12, 3210);
-    			attr_dev(a0, "class", "navbar-brand text-danger");
-    			attr_dev(a0, "href", "/");
-    			add_location(a0, file$1, 104, 8, 3152);
-    			attr_dev(nav0, "class", "navbar");
-    			add_location(nav0, file$1, 103, 4, 3123);
-    			attr_dev(span0, "class", "navbar-toggler-icon");
-    			add_location(span0, file$1, 110, 8, 3518);
-    			attr_dev(button, "class", "navbar-toggler");
-    			attr_dev(button, "type", "button");
-    			attr_dev(button, "data-toggle", "collapse");
-    			attr_dev(button, "data-target", "#navbarSupportedContent");
-    			attr_dev(button, "aria-controls", "navbarSupportedContent");
-    			attr_dev(button, "aria-expanded", "false");
-    			attr_dev(button, "aria-label", "Toggle navigation");
-    			add_location(button, file$1, 109, 4, 3311);
-    			attr_dev(a1, "class", "nav-link");
-    			attr_dev(a1, "href", "#Docs");
-    			add_location(a1, file$1, 116, 16, 3736);
-    			attr_dev(li0, "class", "nav-item");
-    			add_location(li0, file$1, 115, 12, 3698);
-    			attr_dev(span1, "class", "nav-link");
-    			add_location(span1, file$1, 119, 16, 3855);
-    			attr_dev(li1, "class", "nav-item");
-    			add_location(li1, file$1, 118, 12, 3817);
-    			attr_dev(span2, "class", "nav-link");
-    			add_location(span2, file$1, 123, 16, 3991);
-    			attr_dev(li2, "class", "nav-item");
-    			add_location(li2, file$1, 122, 12, 3953);
-    			attr_dev(span3, "class", "nav-link");
-    			add_location(span3, file$1, 127, 16, 4120);
-    			attr_dev(li3, "class", "nav-item");
-    			add_location(li3, file$1, 126, 12, 4082);
-    			attr_dev(span4, "class", "nav-link");
-    			add_location(span4, file$1, 131, 16, 4255);
-    			attr_dev(li4, "class", "nav-item");
-    			add_location(li4, file$1, 130, 12, 4217);
-    			attr_dev(ul, "class", "navbar-nav mr-auto");
-    			add_location(ul, file$1, 114, 8, 3654);
-    			attr_dev(div, "class", "collapse navbar-collapse");
-    			attr_dev(div, "id", "navbarSupportedContent");
-    			add_location(div, file$1, 113, 4, 3579);
-    			attr_dev(span5, "class", "navbar-text");
-    			add_location(span5, file$1, 136, 4, 4362);
-    			attr_dev(nav1, "class", "navbar navbar-expand-lg justify-content-between");
-    			add_location(nav1, file$1, 101, 0, 3029);
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, nav1, anchor);
-    			append_dev(nav1, nav0);
-    			append_dev(nav0, a0);
-    			append_dev(a0, img);
-    			append_dev(a0, t0);
-    			append_dev(nav1, t1);
-    			append_dev(nav1, button);
-    			append_dev(button, span0);
-    			append_dev(nav1, t2);
-    			append_dev(nav1, div);
-    			append_dev(div, ul);
-    			append_dev(ul, li0);
-    			append_dev(li0, a1);
-    			append_dev(ul, t4);
-    			append_dev(ul, li1);
-    			append_dev(li1, span1);
-    			append_dev(span1, t5);
-    			append_dev(span1, t6);
-    			append_dev(ul, t7);
-    			append_dev(ul, li2);
-    			append_dev(li2, span2);
-    			append_dev(span2, t8);
-    			append_dev(span2, t9);
-    			append_dev(ul, t10);
-    			append_dev(ul, li3);
-    			append_dev(li3, span3);
-    			append_dev(span3, t11);
-    			append_dev(span3, t12);
-    			append_dev(ul, t13);
-    			append_dev(ul, li4);
-    			append_dev(li4, span4);
-    			append_dev(span4, t14);
-    			append_dev(span4, t15);
-    			append_dev(nav1, t16);
-    			append_dev(nav1, span5);
-    			if_block.m(span5, null);
-    		},
-    		p: function update(ctx, [dirty]) {
-    			if (dirty & /*socket*/ 2 && t6_value !== (t6_value = /*socket*/ ctx[1].usersTotal + "")) set_data_dev(t6, t6_value);
-    			if (dirty & /*socket*/ 2 && t9_value !== (t9_value = /*socket*/ ctx[1].users + "")) set_data_dev(t9, t9_value);
-    			if (dirty & /*socket*/ 2 && t12_value !== (t12_value = /*socket*/ ctx[1].value + "")) set_data_dev(t12, t12_value);
-    			if (dirty & /*wallet*/ 1 && t15_value !== (t15_value = /*wallet*/ ctx[0].gasPrice + "")) set_data_dev(t15, t15_value);
+        const block = {
+            c: function create() {
+                nav1 = element("nav");
+                nav0 = element("nav");
+                a0 = element("a");
+                img = element("img");
+                t0 = text("\n            IStoleThis");
+                t1 = space();
+                button = element("button");
+                span0 = element("span");
+                t2 = space();
+                div = element("div");
+                ul = element("ul");
+                li0 = element("li");
+                a1 = element("a");
+                a1.textContent = "Documentation";
+                t4 = space();
+                li1 = element("li");
+                span1 = element("span");
+                t5 = text("Connected Users: ");
+                t6 = text(t6_value);
+                t7 = space();
+                li2 = element("li");
+                span2 = element("span");
+                t8 = text("User in round: ");
+                t9 = text(t9_value);
+                t10 = space();
+                li3 = element("li");
+                span3 = element("span");
+                t11 = text("Estimated NFT Value: ");
+                t12 = text(t12_value);
+                t13 = space();
+                li4 = element("li");
+                span4 = element("span");
+                t14 = text("Gas Price: ");
+                t15 = text(t15_value);
+                t16 = space();
+                span5 = element("span");
+                if_block.c();
+                if (!src_url_equal(img.src, img_src_value = "GoldPoo.png")) attr_dev(img, "src", img_src_value);
+                set_style(img, "max-height", "32px");
+                add_location(img, file$1, 105, 12, 3210);
+                attr_dev(a0, "class", "navbar-brand text-danger");
+                attr_dev(a0, "href", "/");
+                add_location(a0, file$1, 104, 8, 3152);
+                attr_dev(nav0, "class", "navbar");
+                add_location(nav0, file$1, 103, 4, 3123);
+                attr_dev(span0, "class", "navbar-toggler-icon");
+                add_location(span0, file$1, 110, 8, 3518);
+                attr_dev(button, "class", "navbar-toggler");
+                attr_dev(button, "type", "button");
+                attr_dev(button, "data-toggle", "collapse");
+                attr_dev(button, "data-target", "#navbarSupportedContent");
+                attr_dev(button, "aria-controls", "navbarSupportedContent");
+                attr_dev(button, "aria-expanded", "false");
+                attr_dev(button, "aria-label", "Toggle navigation");
+                add_location(button, file$1, 109, 4, 3311);
+                attr_dev(a1, "class", "nav-link");
+                attr_dev(a1, "href", "#Docs");
+                add_location(a1, file$1, 116, 16, 3736);
+                attr_dev(li0, "class", "nav-item");
+                add_location(li0, file$1, 115, 12, 3698);
+                attr_dev(span1, "class", "nav-link");
+                add_location(span1, file$1, 119, 16, 3855);
+                attr_dev(li1, "class", "nav-item");
+                add_location(li1, file$1, 118, 12, 3817);
+                attr_dev(span2, "class", "nav-link");
+                add_location(span2, file$1, 123, 16, 3991);
+                attr_dev(li2, "class", "nav-item");
+                add_location(li2, file$1, 122, 12, 3953);
+                attr_dev(span3, "class", "nav-link");
+                add_location(span3, file$1, 127, 16, 4120);
+                attr_dev(li3, "class", "nav-item");
+                add_location(li3, file$1, 126, 12, 4082);
+                attr_dev(span4, "class", "nav-link");
+                add_location(span4, file$1, 131, 16, 4255);
+                attr_dev(li4, "class", "nav-item");
+                add_location(li4, file$1, 130, 12, 4217);
+                attr_dev(ul, "class", "navbar-nav mr-auto");
+                add_location(ul, file$1, 114, 8, 3654);
+                attr_dev(div, "class", "collapse navbar-collapse");
+                attr_dev(div, "id", "navbarSupportedContent");
+                add_location(div, file$1, 113, 4, 3579);
+                attr_dev(span5, "class", "navbar-text");
+                add_location(span5, file$1, 136, 4, 4362);
+                attr_dev(nav1, "class", "navbar navbar-expand-lg justify-content-between");
+                add_location(nav1, file$1, 101, 0, 3029);
+            },
+            l: function claim(nodes) {
+                throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+            },
+            m: function mount(target, anchor) {
+                insert_dev(target, nav1, anchor);
+                append_dev(nav1, nav0);
+                append_dev(nav0, a0);
+                append_dev(a0, img);
+                append_dev(a0, t0);
+                append_dev(nav1, t1);
+                append_dev(nav1, button);
+                append_dev(button, span0);
+                append_dev(nav1, t2);
+                append_dev(nav1, div);
+                append_dev(div, ul);
+                append_dev(ul, li0);
+                append_dev(li0, a1);
+                append_dev(ul, t4);
+                append_dev(ul, li1);
+                append_dev(li1, span1);
+                append_dev(span1, t5);
+                append_dev(span1, t6);
+                append_dev(ul, t7);
+                append_dev(ul, li2);
+                append_dev(li2, span2);
+                append_dev(span2, t8);
+                append_dev(span2, t9);
+                append_dev(ul, t10);
+                append_dev(ul, li3);
+                append_dev(li3, span3);
+                append_dev(span3, t11);
+                append_dev(span3, t12);
+                append_dev(ul, t13);
+                append_dev(ul, li4);
+                append_dev(li4, span4);
+                append_dev(span4, t14);
+                append_dev(span4, t15);
+                append_dev(nav1, t16);
+                append_dev(nav1, span5);
+                if_block.m(span5, null);
+            },
+            p: function update(ctx, [dirty]) {
+                if (dirty & /*socket*/ 2 && t6_value !== (t6_value = /*socket*/ ctx[1].usersTotal + "")) set_data_dev(t6, t6_value);
+                if (dirty & /*socket*/ 2 && t9_value !== (t9_value = /*socket*/ ctx[1].users + "")) set_data_dev(t9, t9_value);
+                if (dirty & /*socket*/ 2 && t12_value !== (t12_value = /*socket*/ ctx[1].value + "")) set_data_dev(t12, t12_value);
+                if (dirty & /*wallet*/ 1 && t15_value !== (t15_value = /*wallet*/ ctx[0].gasPrice + "")) set_data_dev(t15, t15_value);
 
-    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-    				if_block.p(ctx, dirty);
-    			} else {
-    				if_block.d(1);
-    				if_block = current_block_type(ctx);
+                if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+                    if_block.p(ctx, dirty);
+                } else {
+                    if_block.d(1);
+                    if_block = current_block_type(ctx);
 
-    				if (if_block) {
-    					if_block.c();
-    					if_block.m(span5, null);
-    				}
-    			}
-    		},
-    		i: noop,
-    		o: noop,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(nav1);
-    			if_block.d();
-    		}
-    	};
+                    if (if_block) {
+                        if_block.c();
+                        if_block.m(span5, null);
+                    }
+                }
+            },
+            i: noop,
+            o: noop,
+            d: function destroy(detaching) {
+                if (detaching) detach_dev(nav1);
+                if_block.d();
+            }
+        };
 
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment$1.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
+        dispatch_dev("SvelteRegisterBlock", {
+            block,
+            id: create_fragment$1.name,
+            type: "component",
+            source: "",
+            ctx
+        });
 
-    	return block;
+        return block;
     }
 
     async function connectEther(privKey) {
-    	
+
     }
 
     async function logOut() {
-    	console.log("logged out");
+        console.log("logged out");
     }
 
     function instance$1($$self, $$props, $$invalidate) {
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('Navbar', slots, []);
+        let { $$slots: slots = {}, $$scope } = $$props;
+        validate_slots('Navbar', slots, []);
 
-    	let { socket = {
-    		users: 1,
-    		usersTotal: 2,
-    		value: "1 ETH | $2,881.29"
-    	} } = $$props;
+        let { socket = {
+            users: 1,
+            usersTotal: 2,
+            value: "1 ETH | $2,881.29"
+        } } = $$props;
 
-    	let { wallet = {
-    		account: "",
-    		connected: false,
-    		gasPrice: 0,
-    		balance: 0
-    	} } = $$props;
+        let { wallet = {
+            account: "",
+            connected: false,
+            gasPrice: 0,
+            balance: 0
+        } } = $$props;
 
-    	const web3authSdk = window.Web3auth;
-    	let web3AuthInstance = null;
+        const web3authSdk = window.Web3auth;
+        let web3AuthInstance = null;
 
-    	web3AuthInstance = new web3authSdk.Web3Auth({
-    			chainConfig: { chainNamespace: "eip155" },
-    			clientId: "BNp9wPRk6KyzQT-hn3vZv-Epw-UA7IA0G_ufVIzDOahRkKcZgoIxEaincfYNSWO2Fn9ueJnIj5xJBkoVj3Nj5sM", // get your clientId from https://dashboard.web3auth.io
-    			
-    		});
+        web3AuthInstance = new web3authSdk.Web3Auth({
+                                                        chainConfig: { chainNamespace: "eip155" },
+                                                        clientId: "BNp9wPRk6KyzQT-hn3vZv-Epw-UA7IA0G_ufVIzDOahRkKcZgoIxEaincfYNSWO2Fn9ueJnIj5xJBkoVj3Nj5sM", // get your clientId from https://dashboard.web3auth.io
 
-    	subscribeAuthEvents(web3AuthInstance);
-    	web3AuthInstance.initModal();
+                                                    });
 
-    	async function initWeb3() {
-    		// we can access this provider on `web3AuthInstance` only after user is logged in.
-    		// This provider is also returned as a response of `connect` function in step 4. You can use either ways.
-    		const web3 = new Web3(web3AuthInstance.provider);
+        subscribeAuthEvents(web3AuthInstance);
+        web3AuthInstance.initModal();
 
-    		$$invalidate(0, wallet.account = web3.eth.getAccounts()[0], wallet);
-    		$$invalidate(0, wallet.balance = web3.eth.getBalance(wallet.account), wallet);
-    	}
+        async function initWeb3() {
+            // we can access this provider on `web3AuthInstance` only after user is logged in.
+            // This provider is also returned as a response of `connect` function in step 4. You can use either ways.
+            const web3 = new Web3(web3AuthInstance.provider);
 
-    	if (web3AuthInstance.provider) {
-    		const user = web3AuthInstance.getUserInfo();
-    		console.log("got it");
-    		console.dir(user);
-    		initWeb3();
-    	}
+            $$invalidate(0, wallet.account = web3.eth.getAccounts()[0], wallet);
+            $$invalidate(0, wallet.balance = web3.eth.getBalance(wallet.account), wallet);
+        }
 
-    	function handleAccountsChanged(accounts) {
-    		if (accounts.length === 0) {
-    			// MetaMask is locked or the user has not connected any accounts
-    			console.log('Please connect to MetaMask.');
-    		} else if (accounts[0] !== wallet.account) {
-    			$$invalidate(0, wallet.account = accounts[0], wallet);
-    		} // Do any other work!
-    	}
+        if (web3AuthInstance.provider) {
+            const user = web3AuthInstance.getUserInfo();
+            console.log("got it");
+            console.dir(user);
+            initWeb3();
+        }
 
-    	let web3A = null;
+        function handleAccountsChanged(accounts) {
+            if (accounts.length === 0) {
+                // MetaMask is locked or the user has not connected any accounts
+                console.log('Please connect to MetaMask.');
+            } else if (accounts[0] !== wallet.account) {
+                $$invalidate(0, wallet.account = accounts[0], wallet);
+            } // Do any other work!
+        }
 
-    	function subscribeAuthEvents(web3auth) {
-    		web3auth.on("connected", data => {
-    			const web3 = new Web3(web3auth.provider);
+        let web3A = null;
 
-    			web3.eth.getAccounts().then(function (accounts) {
-    				$$invalidate(0, wallet.connected = true, wallet);
-    				$$invalidate(0, wallet.account = accounts[0], wallet);
-    				web3A = web3auth;
-    			});
-    			console.log("Yeah!, you are successfully logged in", data);
-    		});
+        function subscribeAuthEvents(web3auth) {
+            web3auth.on("connected", data => {
+                const web3 = new Web3(web3auth.provider);
 
-    		web3auth.on("connecting", () => {
-    			console.log("connecting");
-    		});
+                web3.eth.getAccounts().then(function (accounts) {
+                    $$invalidate(0, wallet.connected = true, wallet);
+                    $$invalidate(0, wallet.account = accounts[0], wallet);
+                    web3A = web3auth;
+                });
+                console.log("Yeah!, you are successfully logged in", data);
+            });
 
-    		web3auth.on("disconnected", () => {
-    			console.log("disconnected");
-    		});
+            web3auth.on("connecting", () => {
+                console.log("connecting");
+            });
 
-    		web3auth.on("errored", error => {
-    			console.log("some error or user have cancelled login request", error);
-    		});
+            web3auth.on("disconnected", () => {
+                console.log("disconnected");
+            });
 
-    		web3auth.on("MODAL_VISIBILITY", isVisible => {
-    			console.log("modal visibility", isVisible);
-    		});
-    	}
+            web3auth.on("errored", error => {
+                console.log("some error or user have cancelled login request", error);
+            });
 
-    	/* Authentication code */
-    	async function login() {
-    		if (wallet.account) {
-    			await web3A.logout().then(function () {
-    				$$invalidate(0, wallet.account = null, wallet);
-    				$$invalidate(0, wallet.connected = false, wallet);
-    			});
-    		} else {
-    			await web3AuthInstance.connect();
-    		}
-    	}
+            web3auth.on("MODAL_VISIBILITY", isVisible => {
+                console.log("modal visibility", isVisible);
+            });
+        }
 
-    	const writable_props = ['socket', 'wallet'];
+        /* Authentication code */
+        async function login() {
+            if (wallet.account) {
+                await web3A.logout().then(function () {
+                    $$invalidate(0, wallet.account = null, wallet);
+                    $$invalidate(0, wallet.connected = false, wallet);
+                });
+            } else {
+                await web3AuthInstance.connect();
+            }
+        }
 
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<Navbar> was created with unknown prop '${key}'`);
-    	});
+        const writable_props = ['socket', 'wallet'];
 
-    	$$self.$$set = $$props => {
-    		if ('socket' in $$props) $$invalidate(1, socket = $$props.socket);
-    		if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
-    	};
+        Object.keys($$props).forEach(key => {
+            if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<Navbar> was created with unknown prop '${key}'`);
+        });
 
-    	$$self.$capture_state = () => ({
-    		socket,
-    		wallet,
-    		web3authSdk,
-    		web3AuthInstance,
-    		initWeb3,
-    		handleAccountsChanged,
-    		web3A,
-    		subscribeAuthEvents,
-    		connectEther,
-    		login,
-    		logOut
-    	});
+        $$self.$$set = $$props => {
+            if ('socket' in $$props) $$invalidate(1, socket = $$props.socket);
+            if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
+        };
 
-    	$$self.$inject_state = $$props => {
-    		if ('socket' in $$props) $$invalidate(1, socket = $$props.socket);
-    		if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
-    		if ('web3AuthInstance' in $$props) web3AuthInstance = $$props.web3AuthInstance;
-    		if ('web3A' in $$props) web3A = $$props.web3A;
-    	};
+        $$self.$capture_state = () => ({
+            socket,
+            wallet,
+            web3authSdk,
+            web3AuthInstance,
+            initWeb3,
+            handleAccountsChanged,
+            web3A,
+            subscribeAuthEvents,
+            connectEther,
+            login,
+            logOut
+        });
 
-    	if ($$props && "$$inject" in $$props) {
-    		$$self.$inject_state($$props.$$inject);
-    	}
+        $$self.$inject_state = $$props => {
+            if ('socket' in $$props) $$invalidate(1, socket = $$props.socket);
+            if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
+            if ('web3AuthInstance' in $$props) web3AuthInstance = $$props.web3AuthInstance;
+            if ('web3A' in $$props) web3A = $$props.web3A;
+        };
 
-    	return [wallet, socket, login];
+        if ($$props && "$$inject" in $$props) {
+            $$self.$inject_state($$props.$$inject);
+        }
+
+        return [wallet, socket, login];
     }
 
     class Navbar extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { socket: 1, wallet: 0 });
+        constructor(options) {
+            super(options);
+            init(this, options, instance$1, create_fragment$1, safe_not_equal, { socket: 1, wallet: 0 });
 
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "Navbar",
-    			options,
-    			id: create_fragment$1.name
-    		});
-    	}
+            dispatch_dev("SvelteRegisterComponent", {
+                component: this,
+                tagName: "Navbar",
+                options,
+                id: create_fragment$1.name
+            });
+        }
 
-    	get socket() {
-    		throw new Error("<Navbar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
+        get socket() {
+            throw new Error("<Navbar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+        }
 
-    	set socket(value) {
-    		throw new Error("<Navbar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
+        set socket(value) {
+            throw new Error("<Navbar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+        }
 
-    	get wallet() {
-    		throw new Error("<Navbar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
+        get wallet() {
+            throw new Error("<Navbar>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+        }
 
-    	set wallet(value) {
-    		throw new Error("<Navbar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
+        set wallet(value) {
+            throw new Error("<Navbar>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+        }
     }
 
     /* src/App.svelte generated by Svelte v3.46.4 */
@@ -890,324 +890,324 @@ var app = (function () {
 
     // (47:8) {#if wallet.showErrorMsg}
     function create_if_block(ctx) {
-    	let div2;
-    	let div1;
-    	let div0;
+        let div2;
+        let div1;
+        let div0;
 
-    	const block = {
-    		c: function create() {
-    			div2 = element("div");
-    			div1 = element("div");
-    			div0 = element("div");
-    			div0.textContent = "HEY! You need your wallet connected. Stealing NFTs is one thing, wanting a free ride tsk tsk.";
-    			attr_dev(div0, "class", "alert alert-warning");
-    			attr_dev(div0, "role", "alert");
-    			add_location(div0, file, 49, 20, 1683);
-    			attr_dev(div1, "class", "col col-md-6 offset-md-3 ");
-    			add_location(div1, file, 48, 16, 1623);
-    			attr_dev(div2, "class", "row");
-    			add_location(div2, file, 47, 12, 1589);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, div2, anchor);
-    			append_dev(div2, div1);
-    			append_dev(div1, div0);
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div2);
-    		}
-    	};
+        const block = {
+            c: function create() {
+                div2 = element("div");
+                div1 = element("div");
+                div0 = element("div");
+                div0.textContent = "HEY! You need your wallet connected. Stealing NFTs is one thing, wanting a free ride tsk tsk.";
+                attr_dev(div0, "class", "alert alert-warning");
+                attr_dev(div0, "role", "alert");
+                add_location(div0, file, 49, 20, 1683);
+                attr_dev(div1, "class", "col col-md-6 offset-md-3 ");
+                add_location(div1, file, 48, 16, 1623);
+                attr_dev(div2, "class", "row");
+                add_location(div2, file, 47, 12, 1589);
+            },
+            m: function mount(target, anchor) {
+                insert_dev(target, div2, anchor);
+                append_dev(div2, div1);
+                append_dev(div1, div0);
+            },
+            d: function destroy(detaching) {
+                if (detaching) detach_dev(div2);
+            }
+        };
 
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block.name,
-    		type: "if",
-    		source: "(47:8) {#if wallet.showErrorMsg}",
-    		ctx
-    	});
+        dispatch_dev("SvelteRegisterBlock", {
+            block,
+            id: create_if_block.name,
+            type: "if",
+            source: "(47:8) {#if wallet.showErrorMsg}",
+            ctx
+        });
 
-    	return block;
+        return block;
     }
 
     function create_fragment(ctx) {
-    	let meta;
-    	let link;
-    	let t0;
-    	let main;
-    	let navbar;
-    	let t1;
-    	let div12;
-    	let div1;
-    	let div0;
-    	let img;
-    	let img_src_value;
-    	let t2;
-    	let t3;
-    	let div4;
-    	let div3;
-    	let div2;
-    	let t5;
-    	let div11;
-    	let div10;
-    	let div9;
-    	let div8;
-    	let t6;
-    	let div7;
-    	let t7;
-    	let div5;
-    	let t9;
-    	let div6;
-    	let t11;
-    	let script;
-    	let script_src_value;
-    	let current;
-    	let mounted;
-    	let dispose;
-    	navbar = new Navbar({ $$inline: true });
-    	let if_block = /*wallet*/ ctx[0].showErrorMsg && create_if_block(ctx);
+        let meta;
+        let link;
+        let t0;
+        let main;
+        let navbar;
+        let t1;
+        let div12;
+        let div1;
+        let div0;
+        let img;
+        let img_src_value;
+        let t2;
+        let t3;
+        let div4;
+        let div3;
+        let div2;
+        let t5;
+        let div11;
+        let div10;
+        let div9;
+        let div8;
+        let t6;
+        let div7;
+        let t7;
+        let div5;
+        let t9;
+        let div6;
+        let t11;
+        let script;
+        let script_src_value;
+        let current;
+        let mounted;
+        let dispose;
+        navbar = new Navbar({ $$inline: true });
+        let if_block = /*wallet*/ ctx[0].showErrorMsg && create_if_block(ctx);
 
-    	const block = {
-    		c: function create() {
-    			meta = element("meta");
-    			link = element("link");
-    			t0 = space();
-    			main = element("main");
-    			create_component(navbar.$$.fragment);
-    			t1 = space();
-    			div12 = element("div");
-    			div1 = element("div");
-    			div0 = element("div");
-    			img = element("img");
-    			t2 = space();
-    			if (if_block) if_block.c();
-    			t3 = space();
-    			div4 = element("div");
-    			div3 = element("div");
-    			div2 = element("div");
-    			div2.textContent = "Didn't you know stealing was bad? Don't click/press/right-click the button.";
-    			t5 = space();
-    			div11 = element("div");
-    			div10 = element("div");
-    			div9 = element("div");
-    			div8 = element("div");
-    			t6 = text("What is this? A game where you try to steal the winning nft. When you press the button or right\n                        click it\n                        your wallet will open to enter the round.\n                        ");
-    			div7 = element("div");
-    			t7 = text("Everyone will get an NFT for round. You can opt of minting on loss. Only 1 person will get\n                            the treasure and it's the 2nd to last in\n                            the round.\n                            ");
-    			div5 = element("div");
-    			div5.textContent = "Why second to last? You very naughty and used a DMCA notice to steal from the original\n                                artist even!";
-    			t9 = space();
-    			div6 = element("div");
-    			div6.textContent = "Choose your gas wisely as you can delay a transaction buy setting low gas or execute\n                                instantly with\n                                high gas.";
-    			t11 = space();
-    			script = element("script");
-    			attr_dev(meta, "name", "color-scheme");
-    			attr_dev(meta, "content", "dark light");
-    			add_location(meta, file, 1, 4, 18);
-    			attr_dev(link, "href", "https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-dark.min.css");
-    			attr_dev(link, "rel", "stylesheet");
-    			attr_dev(link, "media", "(prefers-color-scheme: dark)");
-    			add_location(link, file, 2, 4, 70);
-    			if (!src_url_equal(img.src, img_src_value = "button.png")) attr_dev(img, "src", img_src_value);
-    			set_style(img, "background-repeat", "no-repeat");
-    			set_style(img, "min-height", "200px");
-    			set_style(img, "max-height", "800px");
-    			add_location(img, file, 42, 16, 1327);
-    			attr_dev(div0, "class", "col col-md-2 offset-md-4 svelte-4odomw");
-    			toggle_class(div0, "active", /*active*/ ctx[1]);
-    			add_location(div0, file, 39, 12, 1169);
-    			attr_dev(div1, "class", "row align-self-center");
-    			set_style(div1, "min-height", "148px");
-    			set_style(div1, "text-align", "center");
-    			add_location(div1, file, 38, 8, 1075);
-    			attr_dev(div2, "class", "alert alert-warning");
-    			attr_dev(div2, "role", "alert");
-    			add_location(div2, file, 57, 16, 2057);
-    			attr_dev(div3, "class", "col col-md-6 offset-md-3 ");
-    			add_location(div3, file, 56, 12, 2001);
-    			attr_dev(div4, "class", "row align-items-end align-self-end");
-    			add_location(div4, file, 55, 8, 1939);
-    			add_location(div5, file, 72, 28, 2931);
-    			add_location(div6, file, 75, 28, 3131);
-    			add_location(div7, file, 68, 24, 2670);
-    			add_location(div8, file, 65, 20, 2446);
-    			attr_dev(div9, "class", "alert alert-info");
-    			attr_dev(div9, "role", "alert");
-    			add_location(div9, file, 64, 16, 2382);
-    			attr_dev(div10, "class", "col col-md-6 offset-md-3");
-    			add_location(div10, file, 63, 12, 2326);
-    			attr_dev(div11, "class", "row align-items-end align-self-end");
-    			add_location(div11, file, 62, 8, 2265);
-    			attr_dev(div12, "class", "container-fluid");
-    			add_location(div12, file, 36, 4, 1036);
-    			if (!src_url_equal(script.src, script_src_value = "https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/js/darkmode.js")) attr_dev(script, "src", script_src_value);
-    			add_location(script, file, 85, 4, 3475);
-    			add_location(main, file, 33, 0, 1010);
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: function mount(target, anchor) {
-    			append_dev(document.head, meta);
-    			append_dev(document.head, link);
-    			insert_dev(target, t0, anchor);
-    			insert_dev(target, main, anchor);
-    			mount_component(navbar, main, null);
-    			append_dev(main, t1);
-    			append_dev(main, div12);
-    			append_dev(div12, div1);
-    			append_dev(div1, div0);
-    			append_dev(div0, img);
-    			append_dev(div12, t2);
-    			if (if_block) if_block.m(div12, null);
-    			append_dev(div12, t3);
-    			append_dev(div12, div4);
-    			append_dev(div4, div3);
-    			append_dev(div3, div2);
-    			append_dev(div12, t5);
-    			append_dev(div12, div11);
-    			append_dev(div11, div10);
-    			append_dev(div10, div9);
-    			append_dev(div9, div8);
-    			append_dev(div8, t6);
-    			append_dev(div8, div7);
-    			append_dev(div7, t7);
-    			append_dev(div7, div5);
-    			append_dev(div7, t9);
-    			append_dev(div7, div6);
-    			append_dev(main, t11);
-    			append_dev(main, script);
-    			current = true;
+        const block = {
+            c: function create() {
+                meta = element("meta");
+                link = element("link");
+                t0 = space();
+                main = element("main");
+                create_component(navbar.$$.fragment);
+                t1 = space();
+                div12 = element("div");
+                div1 = element("div");
+                div0 = element("div");
+                img = element("img");
+                t2 = space();
+                if (if_block) if_block.c();
+                t3 = space();
+                div4 = element("div");
+                div3 = element("div");
+                div2 = element("div");
+                div2.textContent = "Didn't you know stealing was bad? Don't click/press/right-click the button.";
+                t5 = space();
+                div11 = element("div");
+                div10 = element("div");
+                div9 = element("div");
+                div8 = element("div");
+                t6 = text("What is this? A game where you try to steal the winning nft. When you press the button or right\n                        click it\n                        your wallet will open to enter the round.\n                        ");
+                div7 = element("div");
+                t7 = text("Everyone will get an NFT for round. You can opt of minting on loss. Only 1 person will get\n                            the treasure and it's the 2nd to last in\n                            the round.\n                            ");
+                div5 = element("div");
+                div5.textContent = "Why second to last? You very naughty and used a DMCA notice to steal from the original\n                                artist even!";
+                t9 = space();
+                div6 = element("div");
+                div6.textContent = "Choose your gas wisely as you can delay a transaction buy setting low gas or execute\n                                instantly with\n                                high gas.";
+                t11 = space();
+                script = element("script");
+                attr_dev(meta, "name", "color-scheme");
+                attr_dev(meta, "content", "dark light");
+                add_location(meta, file, 1, 4, 18);
+                attr_dev(link, "href", "https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-dark.min.css");
+                attr_dev(link, "rel", "stylesheet");
+                attr_dev(link, "media", "(prefers-color-scheme: dark)");
+                add_location(link, file, 2, 4, 70);
+                if (!src_url_equal(img.src, img_src_value = "button.png")) attr_dev(img, "src", img_src_value);
+                set_style(img, "background-repeat", "no-repeat");
+                set_style(img, "min-height", "200px");
+                set_style(img, "max-height", "800px");
+                add_location(img, file, 42, 16, 1327);
+                attr_dev(div0, "class", "col col-md-2 offset-md-4 svelte-4odomw");
+                toggle_class(div0, "active", /*active*/ ctx[1]);
+                add_location(div0, file, 39, 12, 1169);
+                attr_dev(div1, "class", "row align-self-center");
+                set_style(div1, "min-height", "148px");
+                set_style(div1, "text-align", "center");
+                add_location(div1, file, 38, 8, 1075);
+                attr_dev(div2, "class", "alert alert-warning");
+                attr_dev(div2, "role", "alert");
+                add_location(div2, file, 57, 16, 2057);
+                attr_dev(div3, "class", "col col-md-6 offset-md-3 ");
+                add_location(div3, file, 56, 12, 2001);
+                attr_dev(div4, "class", "row align-items-end align-self-end");
+                add_location(div4, file, 55, 8, 1939);
+                add_location(div5, file, 72, 28, 2931);
+                add_location(div6, file, 75, 28, 3131);
+                add_location(div7, file, 68, 24, 2670);
+                add_location(div8, file, 65, 20, 2446);
+                attr_dev(div9, "class", "alert alert-info");
+                attr_dev(div9, "role", "alert");
+                add_location(div9, file, 64, 16, 2382);
+                attr_dev(div10, "class", "col col-md-6 offset-md-3");
+                add_location(div10, file, 63, 12, 2326);
+                attr_dev(div11, "class", "row align-items-end align-self-end");
+                add_location(div11, file, 62, 8, 2265);
+                attr_dev(div12, "class", "container-fluid");
+                add_location(div12, file, 36, 4, 1036);
+                if (!src_url_equal(script.src, script_src_value = "https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/js/darkmode.js")) attr_dev(script, "src", script_src_value);
+                add_location(script, file, 85, 4, 3475);
+                add_location(main, file, 33, 0, 1010);
+            },
+            l: function claim(nodes) {
+                throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+            },
+            m: function mount(target, anchor) {
+                append_dev(document.head, meta);
+                append_dev(document.head, link);
+                insert_dev(target, t0, anchor);
+                insert_dev(target, main, anchor);
+                mount_component(navbar, main, null);
+                append_dev(main, t1);
+                append_dev(main, div12);
+                append_dev(div12, div1);
+                append_dev(div1, div0);
+                append_dev(div0, img);
+                append_dev(div12, t2);
+                if (if_block) if_block.m(div12, null);
+                append_dev(div12, t3);
+                append_dev(div12, div4);
+                append_dev(div4, div3);
+                append_dev(div3, div2);
+                append_dev(div12, t5);
+                append_dev(div12, div11);
+                append_dev(div11, div10);
+                append_dev(div10, div9);
+                append_dev(div9, div8);
+                append_dev(div8, t6);
+                append_dev(div8, div7);
+                append_dev(div7, t7);
+                append_dev(div7, div5);
+                append_dev(div7, t9);
+                append_dev(div7, div6);
+                append_dev(main, t11);
+                append_dev(main, script);
+                current = true;
 
-    			if (!mounted) {
-    				dispose = [
-    					listen_dev(img, "mouseup", /*buttonRelease*/ ctx[3], false, false, false),
-    					listen_dev(img, "touchend", /*buttonRelease*/ ctx[3], false, false, false),
-    					listen_dev(div0, "mousedown", /*buttonPress*/ ctx[2], false, false, false),
-    					listen_dev(div0, "touchstart", /*buttonPress*/ ctx[2], false, false, false)
-    				];
+                if (!mounted) {
+                    dispose = [
+                        listen_dev(img, "mouseup", /*buttonRelease*/ ctx[3], false, false, false),
+                        listen_dev(img, "touchend", /*buttonRelease*/ ctx[3], false, false, false),
+                        listen_dev(div0, "mousedown", /*buttonPress*/ ctx[2], false, false, false),
+                        listen_dev(div0, "touchstart", /*buttonPress*/ ctx[2], false, false, false)
+                    ];
 
-    				mounted = true;
-    			}
-    		},
-    		p: function update(ctx, [dirty]) {
-    			if (dirty & /*active*/ 2) {
-    				toggle_class(div0, "active", /*active*/ ctx[1]);
-    			}
+                    mounted = true;
+                }
+            },
+            p: function update(ctx, [dirty]) {
+                if (dirty & /*active*/ 2) {
+                    toggle_class(div0, "active", /*active*/ ctx[1]);
+                }
 
-    			if (/*wallet*/ ctx[0].showErrorMsg) {
-    				if (if_block) ; else {
-    					if_block = create_if_block(ctx);
-    					if_block.c();
-    					if_block.m(div12, t3);
-    				}
-    			} else if (if_block) {
-    				if_block.d(1);
-    				if_block = null;
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(navbar.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(navbar.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			detach_dev(meta);
-    			detach_dev(link);
-    			if (detaching) detach_dev(t0);
-    			if (detaching) detach_dev(main);
-    			destroy_component(navbar);
-    			if (if_block) if_block.d();
-    			mounted = false;
-    			run_all(dispose);
-    		}
-    	};
+                if (/*wallet*/ ctx[0].showErrorMsg) {
+                    if (if_block) ; else {
+                        if_block = create_if_block(ctx);
+                        if_block.c();
+                        if_block.m(div12, t3);
+                    }
+                } else if (if_block) {
+                    if_block.d(1);
+                    if_block = null;
+                }
+            },
+            i: function intro(local) {
+                if (current) return;
+                transition_in(navbar.$$.fragment, local);
+                current = true;
+            },
+            o: function outro(local) {
+                transition_out(navbar.$$.fragment, local);
+                current = false;
+            },
+            d: function destroy(detaching) {
+                detach_dev(meta);
+                detach_dev(link);
+                if (detaching) detach_dev(t0);
+                if (detaching) detach_dev(main);
+                destroy_component(navbar);
+                if (if_block) if_block.d();
+                mounted = false;
+                run_all(dispose);
+            }
+        };
 
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
+        dispatch_dev("SvelteRegisterBlock", {
+            block,
+            id: create_fragment.name,
+            type: "component",
+            source: "",
+            ctx
+        });
 
-    	return block;
+        return block;
     }
 
     function instance($$self, $$props, $$invalidate) {
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('App', slots, []);
-    	let wallet = { connected: false, showErrorMsg: false };
-    	let active = false;
-    	wallet.connected = typeof window.ethereum !== 'undefined';
+        let { $$slots: slots = {}, $$scope } = $$props;
+        validate_slots('App', slots, []);
+        let wallet = { connected: false, showErrorMsg: false };
+        let active = false;
+        wallet.connected = typeof window.ethereum !== 'undefined';
 
-    	function buttonPress(event) {
-    		$$invalidate(1, active = !active);
-    		event.target.src = 'buttonPushed.png';
+        function buttonPress(event) {
+            $$invalidate(1, active = !active);
+            event.target.src = 'buttonPushed.png';
 
-    		if (wallet.connected && wallet.showErrorMsg === false) {
-    			$$invalidate(0, wallet.showErrorMsg = true, wallet);
-    		}
-    	}
+            if (wallet.connected && wallet.showErrorMsg === false) {
+                $$invalidate(0, wallet.showErrorMsg = true, wallet);
+            }
+        }
 
-    	function buttonRelease(event) {
-    		$$invalidate(1, active = !active);
-    		event.target.src = 'button.png';
+        function buttonRelease(event) {
+            $$invalidate(1, active = !active);
+            event.target.src = 'button.png';
 
-    		if (wallet.connected && wallet.showErrorMsg === false) {
-    			$$invalidate(0, wallet.showErrorMsg = true, wallet);
-    		}
-    	}
+            if (wallet.connected && wallet.showErrorMsg === false) {
+                $$invalidate(0, wallet.showErrorMsg = true, wallet);
+            }
+        }
 
-    	const writable_props = [];
+        const writable_props = [];
 
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
-    	});
+        Object.keys($$props).forEach(key => {
+            if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
+        });
 
-    	$$self.$capture_state = () => ({
-    		Navbar,
-    		wallet,
-    		active,
-    		buttonPress,
-    		buttonRelease
-    	});
+        $$self.$capture_state = () => ({
+            Navbar,
+            wallet,
+            active,
+            buttonPress,
+            buttonRelease
+        });
 
-    	$$self.$inject_state = $$props => {
-    		if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
-    		if ('active' in $$props) $$invalidate(1, active = $$props.active);
-    	};
+        $$self.$inject_state = $$props => {
+            if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
+            if ('active' in $$props) $$invalidate(1, active = $$props.active);
+        };
 
-    	if ($$props && "$$inject" in $$props) {
-    		$$self.$inject_state($$props.$$inject);
-    	}
+        if ($$props && "$$inject" in $$props) {
+            $$self.$inject_state($$props.$$inject);
+        }
 
-    	return [wallet, active, buttonPress, buttonRelease];
+        return [wallet, active, buttonPress, buttonRelease];
     }
 
     class App extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init(this, options, instance, create_fragment, safe_not_equal, {});
+        constructor(options) {
+            super(options);
+            init(this, options, instance, create_fragment, safe_not_equal, {});
 
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "App",
-    			options,
-    			id: create_fragment.name
-    		});
-    	}
+            dispatch_dev("SvelteRegisterComponent", {
+                component: this,
+                tagName: "App",
+                options,
+                id: create_fragment.name
+            });
+        }
     }
 
     const app = new App({
-    	target: document.body,
-    	props: {
-    		name: 'world'
-    	}
-    });
+                            target: document.body,
+                            props: {
+                                name: 'world'
+                            }
+                        });
 
     return app;
 
