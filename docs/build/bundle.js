@@ -1,5 +1,5 @@
 
-(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35730/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 var app = (function () {
     'use strict';
 
@@ -402,7 +402,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$1 = "src/componets/navbar.svelte";
 
-    // (130:8) {:else }
+    // (141:8) {:else }
     function create_else_block(ctx) {
     	let a;
     	let mounted;
@@ -414,7 +414,7 @@ var app = (function () {
     			a.textContent = "Connect Wallet";
     			attr_dev(a, "class", "navbar-brand");
     			attr_dev(a, "href", "#connect");
-    			add_location(a, file$1, 130, 12, 4303);
+    			add_location(a, file$1, 141, 12, 4564);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -436,14 +436,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(130:8) {:else }",
+    		source: "(141:8) {:else }",
     		ctx
     	});
 
     	return block;
     }
 
-    // (127:8) {#if wallet.connected}
+    // (138:8) {#if wallet.connected}
     function create_if_block$1(ctx) {
     	let a;
 
@@ -461,7 +461,7 @@ var app = (function () {
     			t = text(t_value);
     			attr_dev(a, "class", "navbar-brand");
     			attr_dev(a, "href", "#connect");
-    			add_location(a, file$1, 127, 12, 4171);
+    			add_location(a, file$1, 138, 12, 4432);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -488,7 +488,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(127:8) {#if wallet.connected}",
+    		source: "(138:8) {#if wallet.connected}",
     		ctx
     	});
 
@@ -586,14 +586,14 @@ var app = (function () {
     			if_block.c();
     			if (!src_url_equal(img.src, img_src_value = "GoldPoo.png")) attr_dev(img, "src", img_src_value);
     			set_style(img, "max-height", "32px");
-    			add_location(img, file$1, 94, 12, 2949);
+    			add_location(img, file$1, 105, 12, 3210);
     			attr_dev(a0, "class", "navbar-brand text-danger");
     			attr_dev(a0, "href", "/");
-    			add_location(a0, file$1, 93, 8, 2891);
+    			add_location(a0, file$1, 104, 8, 3152);
     			attr_dev(nav0, "class", "navbar");
-    			add_location(nav0, file$1, 92, 4, 2862);
+    			add_location(nav0, file$1, 103, 4, 3123);
     			attr_dev(span0, "class", "navbar-toggler-icon");
-    			add_location(span0, file$1, 99, 8, 3257);
+    			add_location(span0, file$1, 110, 8, 3518);
     			attr_dev(button, "class", "navbar-toggler");
     			attr_dev(button, "type", "button");
     			attr_dev(button, "data-toggle", "collapse");
@@ -601,37 +601,37 @@ var app = (function () {
     			attr_dev(button, "aria-controls", "navbarSupportedContent");
     			attr_dev(button, "aria-expanded", "false");
     			attr_dev(button, "aria-label", "Toggle navigation");
-    			add_location(button, file$1, 98, 4, 3050);
+    			add_location(button, file$1, 109, 4, 3311);
     			attr_dev(a1, "class", "nav-link");
     			attr_dev(a1, "href", "#Docs");
-    			add_location(a1, file$1, 105, 16, 3475);
+    			add_location(a1, file$1, 116, 16, 3736);
     			attr_dev(li0, "class", "nav-item");
-    			add_location(li0, file$1, 104, 12, 3437);
+    			add_location(li0, file$1, 115, 12, 3698);
     			attr_dev(span1, "class", "nav-link");
-    			add_location(span1, file$1, 108, 16, 3594);
+    			add_location(span1, file$1, 119, 16, 3855);
     			attr_dev(li1, "class", "nav-item");
-    			add_location(li1, file$1, 107, 12, 3556);
+    			add_location(li1, file$1, 118, 12, 3817);
     			attr_dev(span2, "class", "nav-link");
-    			add_location(span2, file$1, 112, 16, 3730);
+    			add_location(span2, file$1, 123, 16, 3991);
     			attr_dev(li2, "class", "nav-item");
-    			add_location(li2, file$1, 111, 12, 3692);
+    			add_location(li2, file$1, 122, 12, 3953);
     			attr_dev(span3, "class", "nav-link");
-    			add_location(span3, file$1, 116, 16, 3859);
+    			add_location(span3, file$1, 127, 16, 4120);
     			attr_dev(li3, "class", "nav-item");
-    			add_location(li3, file$1, 115, 12, 3821);
+    			add_location(li3, file$1, 126, 12, 4082);
     			attr_dev(span4, "class", "nav-link");
-    			add_location(span4, file$1, 120, 16, 3994);
+    			add_location(span4, file$1, 131, 16, 4255);
     			attr_dev(li4, "class", "nav-item");
-    			add_location(li4, file$1, 119, 12, 3956);
+    			add_location(li4, file$1, 130, 12, 4217);
     			attr_dev(ul, "class", "navbar-nav mr-auto");
-    			add_location(ul, file$1, 103, 8, 3393);
+    			add_location(ul, file$1, 114, 8, 3654);
     			attr_dev(div, "class", "collapse navbar-collapse");
     			attr_dev(div, "id", "navbarSupportedContent");
-    			add_location(div, file$1, 102, 4, 3318);
+    			add_location(div, file$1, 113, 4, 3579);
     			attr_dev(span5, "class", "navbar-text");
-    			add_location(span5, file$1, 125, 4, 4101);
+    			add_location(span5, file$1, 136, 4, 4362);
     			attr_dev(nav1, "class", "navbar navbar-expand-lg justify-content-between");
-    			add_location(nav1, file$1, 90, 0, 2768);
+    			add_location(nav1, file$1, 101, 0, 3029);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -773,6 +773,8 @@ var app = (function () {
     		} // Do any other work!
     	}
 
+    	let web3A = null;
+
     	function subscribeAuthEvents(web3auth) {
     		web3auth.on("connected", data => {
     			const web3 = new Web3(web3auth.provider);
@@ -780,6 +782,7 @@ var app = (function () {
     			web3.eth.getAccounts().then(function (accounts) {
     				$$invalidate(0, wallet.connected = true, wallet);
     				$$invalidate(0, wallet.account = accounts[0], wallet);
+    				web3A = web3auth;
     			});
     			console.log("Yeah!, you are successfully logged in", data);
     		});
@@ -803,7 +806,14 @@ var app = (function () {
 
     	/* Authentication code */
     	async function login() {
-    		await web3AuthInstance.connect();
+    		if (wallet.account) {
+    			await web3A.logout().then(function () {
+    				$$invalidate(0, wallet.account = null, wallet);
+    				$$invalidate(0, wallet.connected = false, wallet);
+    			});
+    		} else {
+    			await web3AuthInstance.connect();
+    		}
     	}
 
     	const writable_props = ['socket', 'wallet'];
@@ -824,6 +834,7 @@ var app = (function () {
     		web3AuthInstance,
     		initWeb3,
     		handleAccountsChanged,
+    		web3A,
     		subscribeAuthEvents,
     		connectEther,
     		login,
@@ -834,6 +845,7 @@ var app = (function () {
     		if ('socket' in $$props) $$invalidate(1, socket = $$props.socket);
     		if ('wallet' in $$props) $$invalidate(0, wallet = $$props.wallet);
     		if ('web3AuthInstance' in $$props) web3AuthInstance = $$props.web3AuthInstance;
+    		if ('web3A' in $$props) web3A = $$props.web3A;
     	};
 
     	if ($$props && "$$inject" in $$props) {
