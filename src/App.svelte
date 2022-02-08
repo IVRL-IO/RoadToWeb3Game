@@ -27,7 +27,7 @@
 </script>
 <style>
     .active {
-        background-image: url('/buttonPressed.png') !important;;
+        /** background-image: url('/buttonPressed.png') !important; **/
     }
 </style>
 
@@ -41,7 +41,7 @@
                  on:mousedown="{buttonPress}"   on:touchstart="{buttonPress}">
 
                 <img src="button.png" style=" background-repeat: no-repeat;min-height: 200px; max-height: 800px;"   on:mouseup="{buttonRelease}"
-                     on:touchend="{buttonRelease}"/>
+                     on:touchend="{buttonRelease}" alt="Click/right-click/touch to try and steal an NFT!" />
             </div>
         </div>
         {#if wallet.showErrorMsg}
