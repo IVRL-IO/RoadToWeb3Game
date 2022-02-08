@@ -6,7 +6,10 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import json from '@rollup/plugin-json';
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.BUILD == 'production';
+if(production){
+	console.dir('in production');
+}
 
 function serve() {
 	let server;

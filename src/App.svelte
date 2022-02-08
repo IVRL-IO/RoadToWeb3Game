@@ -5,6 +5,7 @@
 
 <script>
     import Navbar from "./componets/navbar.svelte"
+    import Socials from "./componets/socials.svelte"
 
     let wallet = {connected: false, showErrorMsg: false};
     let active = false;
@@ -36,17 +37,17 @@
 
     <div class="container-fluid">
 
-        <div class="row align-self-center" style="min-height: 148px; text-align: center">
-            <div class="col col-md-2 offset-md-4" class:active="{active}"
+        <div class="row align-self-center " style="min-height: 148px; text-align: center">
+            <div class="col col-md-12" class:active="{active}"
                  on:mousedown="{buttonPress}"   on:touchstart="{buttonPress}">
 
-                <img src="button.png" style=" background-repeat: no-repeat;min-height: 200px; max-height: 800px;"   on:mouseup="{buttonRelease}"
+                <img src="button.png" style=" background-repeat: no-repeat;min-height: 200px; max-height: 800px;" alt="Press to play"   on:mouseup="{buttonRelease}"
                      on:touchend="{buttonRelease}"/>
             </div>
         </div>
         {#if wallet.showErrorMsg}
-            <div class="row">
-                <div class="col col-md-6 offset-md-3 ">
+            <div class="row justify-content-center">
+                <div class="col col-md-12 ">
                     <div class="alert alert-warning" role="alert">
                         HEY! You need your wallet connected. Stealing NFTs is one thing, wanting a free ride tsk tsk.
                     </div>
@@ -83,5 +84,6 @@
             </div>
         </div>
     </div>
+    <Socials></Socials>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/js/darkmode.js"></script>
 </main>
